@@ -15,8 +15,7 @@ func TruncateDNSMessage(request *dns.Msg, response *dns.Msg, headroom int) (*buf
 	}
 	responseLen := response.Len()
 	if responseLen > maxLen {
-		responseCopy := *response
-		response = &responseCopy
+		response = response.Copy()
 		response.Truncate(maxLen)
 	}
 	buffer := buf.NewSize(headroom*2 + 1 + responseLen)
